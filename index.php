@@ -20,5 +20,7 @@ if (hash_equals($expectedSignature, $headerSignature)) {
     echo "✅ Подпись верна";
 } else {
     http_response_code(403);
-    echo "❌ Подпись НЕ верна";
+    echo "❌ Подпись НЕ верна\n";
+    echo "👉 Сформированная подпись: {$expectedSignature}\n";
+    echo "👉 Полученная подпись: {$headerSignature}\n";
 }
