@@ -23,7 +23,7 @@ $data = [
 
 // Секретные ключи (замени своими)
 $secret_key_1 = "a8cb398c-e49e-ac00-fe96-3ff992a347b8";
-$secret_key_2 = "MySecretKey2";
+$secret_key_2 = "fmQkYPNGh#EeJ&qLFbcV";
 
 // Формируем строку для подписи — порядок должен строго соответствовать требованиям API
 $signature_string = implode(":", [
