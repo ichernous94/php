@@ -1,58 +1,26 @@
 <?php
-// Данные запроса
-$data = [
-    "amount" => "250.00",
-    "amountcurr" => "EGP",
-    "paysys" => "EXT",
-    "number" => "Invoice20251015",
-    "description" => "Payment20251014",
-    "validity" => "2025-10-15T23:59:59+02:00",
-    "first_name" => "Ahmed",
-    "last_name" => "Hassan",
-    "email" => "ahmed.hassan@example.com",
-    "notify_email" => "0",
-    "phone" => "79991111111",
-    "notify_phone" => "0",
-    "backURL" => "https://merchant-website.com/payment/return",
-    "account" => "ACC1117383",
-    "user_id" => "987654321",
-    "cf1" => "userid:987654321",
-    "cf2" => "first_name:Ahmed",
-    "cf3" => "last_name:Hassan"
-];
+$secret = "sk_live_A06memfnGFvmZ4BWBu_5d7uQPFZ4hbUyZCzWOqW74OM";
+$callbackData = file_get_contents('php://input'); // тело запроса
 
-// Секретные ключи (замени своими)
-$secret_key_1 = "a8cb398c-e49e-ac00-fe96-3ff992a347b8";
-$secret_key_2 = "fmQkYPNGh#EeJ&qLFbcV";
+// Проверяем, есть ли заголовок
+$headerSignature = $_SERVER['HTTP_X_SIGNATURE'] ?? null;
 
-// Формируем строку для подписи — порядок должен строго соответствовать требованиям API
-$signature_string = implode(":", [
-    $data["amount"],
-    $data["amountcurr"],
-    $data["paysys"],
-    $data["number"],
-    $data["description"],
-    $data["validity"],
-    $data["first_name"],
-    $data["last_name"],
-    $data["email"],
-    $data["notify_email"],
-    $data["phone"],
-    $data["notify_phone"],
-    $data["backURL"],
-    $data["account"],
-    $data["user_id"],
-    $data["cf1"],
-    $data["cf2"],
-    $data["cf3"],
-    $secret_key_1,
-    $secret_key_2
-]);
+if ($headerSignature === null) {
+    http_response_code(400);
+    echo "❌ Подпись не передана (нет заголовка HTTP_X_SIGNATURE)";
+    exit;
+}
 
-// Вычисляем MD5-хэш
-$signature = md5($signature_string);
+// Формируем ожидаемую подпись
+$expectedSignature = base64_encode(sha1($secret . $callbackData . $secret, true));
 
-// Для проверки
-echo "Signature string: " . $signature_string . PHP_EOL;
-echo "MD5 signature: " . $signature . PHP_EOL;
-?>
+// Безопасное сравнение
+if (hash_equals($expectedSignature, $headerSignature)) {
+    http_response_code(200);
+    echo "✅ Подпись верна";
+} else {
+    http_response_code(403);
+    echo "❌ Подпись НЕ верна\n";
+    echo "👉 Сформированная подпись: {$expectedSignature}\n";
+    echo "👉 Полученная подпись: {$headerSignature}\n";
+}
