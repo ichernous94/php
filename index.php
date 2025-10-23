@@ -1,5 +1,5 @@
 <?php
-$secret = "sk_live_A06memfnGFvmZ4BWBu_5d7uQPFZ4hbUyZCzWOqW74OM";
+$secret = "sk_live_xxSqgoMkm9ckwr1r1Cf6isw4k3jh7oesqbhWtcNWIFI";
 $callbackData = file_get_contents('php://input'); // тело запроса
 
 // Проверяем, есть ли заголовок
