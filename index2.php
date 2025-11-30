@@ -1,43 +1,27 @@
-<?php
-$greeting = "Добро пожаловать!";
-$message = "Рад видеть вас на этой странице.";
-?>
 <!doctype html>
-<html lang="ru">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Приветствие</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #f4f4f4;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
-    .box {
-        background: white;
-        padding: 30px 40px;
-        border-radius: 12px;
-        box-shadow: 0 0 15px rgba(0,0,0,0.1);
-        text-align: center;
-    }
-    h1 {
-        margin: 0 0 10px;
-    }
-    p {
-        margin: 0;
-        color: #555;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<div class="box">
-    <h1><?= $greeting ?></h1>
-    <p><?= $message ?></p>
+<div class="welcome-card">
+    <div class="welcome-text">
+        <span class="eyebrow">Welcome</span>
+        <h1>Hello and Nice to Meet You!</h1>
+        <p class="lead">
+            This is a simple welcome page created using HTML and CSS.
+            Feel free to customize it and make it your own.
+        </p>
+
+        <div class="actions">
+            <a href="#" class="btn primary">Get Started</a>
+            <a href="#" class="btn secondary">Learn More</a>
+        </div>
+    </div>
 </div>
 
 </body>
